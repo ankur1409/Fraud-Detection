@@ -1,0 +1,13 @@
+{
+  "name": "fraud_detection_web_app",
+  "version": "1.0.0",
+  "description": "Web application for fraud detection",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.17.1",
+    "mongoose": "^5.10.9"
+  }
+}
