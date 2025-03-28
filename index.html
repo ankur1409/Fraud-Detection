@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fraud Detection Dashboard</title>
+</head>
+<body>
+    <h1>Fraud Detection Interactive Dashboard</h1>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>Amount</th>
+                <th>Anomaly</th>
+                <th>Transaction Type</th>
+                <th>Timestamp</th>
+            </tr>
+        </thead>
+        <tbody id="transactionTableBody">
+            <!-- Transaction data will be populated here -->
+        </tbody>
+    </table>
+
+    <script>
+        async function fetchTransactions() {
+            const response = await fetch('/api/transactions');
+            const transactions = await response.json();
+            const tableBody = document.getElementById('transactionTableBody');
+
+            transactions.forEach(transaction => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${transaction.amount}</td>
+                    <td>${transaction.anomaly}</td>
+                    <td>${transaction.transaction_type}</td>
+                    <td>${new Date(transaction.timestamp).toLocaleString()}</td>
+                `;
+                tableBody.appendChild(row);
+            });
+        }
+
+        // Fetch transactions when the page loads
+        window.onload = fetchTransactions;
+    </script>
+</body>
+</html>
