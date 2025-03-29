@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fraud Detection Web App</title>
+    <script>
+        async function fetchTransactions() {
+            const response = await fetch('/api/transactions');
+            const transactions = await response.json();
+            const tableBody = document.getElementById('transaction-table-body');
+            tableBody.innerHTML = '';
+
+            transactions.forEach(transaction => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${transaction.timestamp}</td>
+                    <td>${transaction.amount}</td>
+                    <td>${transaction.transaction_type}</td>
+                    <td>${transaction.anomaly ? 'Anomaly' : 'Normal'}</td>
+                `;
+                tableBody.appendChild(row);
+            });
+        }
+
+        async function saveTransaction() {
+            const transaction = {
+                timestamp: new Date().toISOString(),
+                amount: Math.random() * 200, // Random amount for demonstration
+                transaction_type: 'credit', // Example type
+                anomaly: false // Example anomaly status
+            };
+
+            await fetch('/api/transactions', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(transaction)
+            });
+
+            fetchTransactions(); // Refresh the table
+        }
+
+        window.onload = fetchTransactions;
+    </script>
+</head>
+<body>
+    <h1>Fraud Detection Web App</h1>
+    <button onclick="saveTransaction()">Add Random Transaction</button>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>Timestamp</th>
+                <th>Amount</th>
+                <th>Transaction Type</th>
+                <th>Anomaly</th>
+            </tr>
+        </thead>
+        <tbody id="transaction-table-body">
+            <!-- Transaction data will be populated here -->
+        </tbody>
+    </table>
+</body>
+</html>
+</create_file>
