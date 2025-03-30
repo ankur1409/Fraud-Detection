@@ -34,8 +34,8 @@ class FraudDetectionModel:
 def load_data(file_path):
     """Load the creditcard.csv file"""
     try:
-        logger.info(f"Loading data from {file_path}")
-        data = pd.read_csv(file_path)
+        logger.info(f"Loading data from {'creditcard.csv}")
+        data = pd.read_csv('creditcard.csv')
         if data.empty:
             raise ValueError("Dataset is empty")
         return data
